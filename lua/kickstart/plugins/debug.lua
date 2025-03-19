@@ -101,23 +101,7 @@ return {
       -- Dap UI setup
       -- For more information, see |:help nvim-dap-ui|
       dapui.setup {
-        -- Set icons to characters that are more likely to work in every terminal.
-        --    Feel free to remove or use ones that you like more! :)
-        --    Don't feel like these are good choices.
         icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-        controls = {
-          icons = {
-            pause = '⏸',
-            play = '▶',
-            step_into = '⏎',
-            step_over = '⏭',
-            step_out = '⏮',
-            step_back = 'b',
-            run_last = '▶▶',
-            terminate = '⏹',
-            disconnect = '⏏',
-          },
-        },
       }
 
       -- Change breakpoint icons
@@ -148,15 +132,10 @@ return {
   },
   {
     'mfussenegger/nvim-dap-python',
-    lazy = true,
-  },
-  {
-    'jay-babu/mason-nvim-dap.nvim',
-    -- overrides `require("mason-nvim-dap").setup(...)`
-    opts = {},
     config = function()
       local python = vim.fn.expand '~/.local/share/nvim/mason/packages/debugpy/venv/bin/python'
       require('dap-python').setup(python)
+      -- require('dap-python').setup 'uv'
       require('dap-python').test_runner = 'pytest'
 
       local dap = require 'dap'
@@ -201,11 +180,35 @@ return {
     end,
   },
   {
+    'jay-babu/mason-null-ls.nvim',
+    -- overrides `require("mason-null-ls").setup(...)`
+    opts = {
+      handlers = {},
+      ensure_installed = {
+        'stylua',
+        'python',
+        -- add more arguments for adding more null-ls sources
+      },
+    },
+    dependencies = {
+      'nvimtools/none-ls.nvim',
+    },
+  },
+  {
+    'jay-babu/mason-nvim-dap.nvim',
+    -- overrides `require("mason-nvim-dap").setup(...)`
+    opts = {},
+  },
+  {
     'nvim-neotest/neotest',
     config = function()
       require('neotest').setup {
         adapters = {
-          require 'neotest-python',
+          require 'neotest-python' {
+            dap = { justMyCode = false },
+            args = { '--log-level', 'DEBUG' },
+            runner = 'pytest',
+          },
         },
       }
       vim.keymap.set('n', '<Leader>dt', function()
