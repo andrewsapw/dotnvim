@@ -412,6 +412,13 @@ require('lazy').setup({
             require('telescope.themes').get_dropdown(),
           },
         },
+
+        defaults = {
+          -- Other default settings
+          layout_config = {
+            preview_width = 0.6, -- Adjust this value (0.0 to 1.0) to set the width
+          },
+        },
       }
 
       -- Enable Telescope extensions if they are installed
