@@ -682,7 +682,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        basedpyright = {},
+        pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -724,7 +724,7 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       local lspconfig = require 'lspconfig'
 
-      lspconfig.basedpyright.setup {
+      lspconfig.pyright.setup {
         capabilities = capabilities,
       }
 
