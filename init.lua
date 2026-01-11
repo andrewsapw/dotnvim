@@ -724,11 +724,11 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       local lspconfig = require 'lspconfig'
 
-      lspconfig.pyright.setup {
+      vim.lsp.config('pyright', {
         capabilities = capabilities,
-      }
+      })
 
-      lspconfig.html.setup {
+      vim.lsp.config('html', {
         capabilities = capabilities,
         init_options = {
           configurationSection = { 'html', 'css', 'javascript' },
@@ -738,7 +738,8 @@ require('lazy').setup({
           },
           provideFormatter = true,
         },
-      }
+      })
+
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
       })
@@ -988,6 +989,7 @@ require('lazy').setup({
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    branch = 'master',
     build = ':TSUpdate',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
