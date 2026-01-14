@@ -161,6 +161,9 @@ vim.opt.scrolloff = 10
 -- See `:help 'confirm'`
 vim.opt.confirm = true
 
+-- Limits the number of items shown in the popup
+vim.opt.pumheight = 10
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -688,7 +691,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        pyright = {},
+        ty = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -730,7 +733,7 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       local lspconfig = require 'lspconfig'
 
-      vim.lsp.config('pyright', {
+      vim.lsp.config('ty', {
         capabilities = capabilities,
       })
 
@@ -861,6 +864,10 @@ require('lazy').setup({
           end,
         },
         completion = { completeopt = 'menu,menuone,noinsert' },
+
+        window = {
+          documentation = cmp.config.disable,
+        },
 
         -- For an understanding of why these mappings were
         -- chosen, you will need to read `:help ins-completion`
